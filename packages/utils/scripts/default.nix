@@ -1,0 +1,5 @@
+{ callPackage, ... }:
+
+{
+  xorg = (callPackage ./xorg {}); 
+}
