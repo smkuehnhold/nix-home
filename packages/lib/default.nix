@@ -1,4 +1,5 @@
 { writeTextFile, runtimeShell, lib, stdenv, ... }: { 
+  # Like lib.writeShellScript except it allows you to define runtimeInputs like lib.writeShellApplication
   writeShellScript = {
 		name,
 		text,
