@@ -15,12 +15,11 @@
 
         ${text}
         '';
-      # disable checkPhase because it is failing with "Is a directory"
       # FIXME: No attribute 'shellDryRun'. Perhaps would work in a newer version of nix
       # {stdenv.shellDryRun} "$target"
       # Doing it the old way for now
-      #checkPhase = '' 
-      #  ${stdenv.shell} -n $out
-      #'';
+      checkPhase = '' 
+        ${stdenv.shell} -n $target
+      '';
     };
 }
