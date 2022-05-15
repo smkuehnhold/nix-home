@@ -1,15 +1,11 @@
-{ my,
-  xorg
-}:
-
-let
-  inherit (xorg) xrandr;
-  inherit (my.lib) writeShellScript;
-  text = (builtins.readFile ./get_active_monitors.sh);
+{ 
+  xorg,
+  my,
+  ...
+}: my.lib.writeShellScriptBin { 
   name = "get_active_monitors";
-in writeShellScript {
-  inherit name text; 
-  runtimeInputs = [ xrandr ];
-} 
+  text = (builtins.readFile ./get_active_monitors.sh); 
+  runtimeInputs = [ xorg.xev ]; 
+}
 
 

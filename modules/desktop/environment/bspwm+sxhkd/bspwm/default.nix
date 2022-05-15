@@ -1,9 +1,10 @@
 { pkgs, ... }:
-
-let
-  utils = pkgs.my.packages.utils;
+let 
+  inherit (pkgs) lib;
+  inherit (pkgs.my.packages.utils.scripts.xorg) getActiveMonitors;
 in {
   # xtitle is used in a lot of bspc scripts to get sensible names
+  # it is also useful to debug during runtime
   home.packages = [ pkgs.xtitle ];
 
   xsession.windowManager.bspwm = {
@@ -12,8 +13,7 @@ in {
       "primary" = [ "1" "2" "3" "4" ];
     };
     extraConfig = ''
-      ${utils.scripts.xorg.getActiveMonitors}
-      ${utils.scripts.xorg.getActiveMonitors}
+      PATH=${lib.makeBinPath [ getActiveMonitors ]}:$PATH 
     '';
   };
 }
