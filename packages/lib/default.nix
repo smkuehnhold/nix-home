@@ -1,4 +1,4 @@
-{ writeTextFile, runtimeShell, lib, stdenv, ... }: { 
+{ writeTextFile, runtimeShell, lib, stdenv, ... }: rec { 
   # Like lib.writeShellScript except it allows you to define runtimeInputs like lib.writeShellApplication
   writeShellScriptBin = { 
     name, 
@@ -11,7 +11,7 @@
       destination = "/bin/${name}";
       text = ''
         #!${runtimeShell}
-        export PATH="${lib.makeBinPath runtimeInputs}:$PATH"
+        ${makePathExport { inherit runtimeInputs; }}
 
         ${text}
         '';
@@ -22,4 +22,18 @@
         ${stdenv.shell} -n $target
       '';
     };
+
+  makePathExport = {
+    runtimeInputs ? []
+  }: "export PATH=${lib.makeBinPath runtimeInputs}:$PATH";
+
+  # read a script from a file and add inputs to its path
+  readScript = {
+    path,
+    runtimeInputs ? []
+  }: ''
+   ${makePathExport { inherit runtimeInputs; }} 
+
+   ${builtins.readFile path}
+  '';
 }

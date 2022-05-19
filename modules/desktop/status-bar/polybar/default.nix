@@ -1,9 +1,7 @@
 { pkgs, ... }:
 let
   fonts = import ./fonts { inherit pkgs; };
-  xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
-  cut = "${pkgs.coreutils}/bin/cut";
-  grep = "${pkgs.gnugrep}/bin/grep";
+  inherit (pkgs) my;
 in {
   home.packages = with pkgs; with fonts; [ jost typicons font-awesome ];
 
@@ -97,22 +95,40 @@ in {
           };
         }; 
       };
+
+      "bar/top-desktop" = {
+        wm-restack = "bspwm";
+
+        monitor = "\${env:MONITOR}";
+
+        font = [ 
+          "Jost*:style=Book,Regular:pixelsize=16;1" 
+          "typicons:style=Regular:pixelsize=21"
+          "Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid:pixelsize=12;1"
+          "Font Awesome 5 Free,Font Awesome 5 Free Regular:style=Regular:pixelsize=12;1"
+        ];
+
+        height = "1.75%";
+        width = "99.7%";
+        offset.x = "0.15%";
+        
+
+        modules = {
+          left = "pager";
+          center = "date";
+          right = "time";
+          margins = {
+            left = "1.25%";
+            center = "1.25%";
+            right = "1.25%";
+          };
+        }; 
+      };
     };
-   
-   script = ''
-     CONNECTED_MONITORS=$(${xrandr} -q | ${grep} -w "connected" | ${cut} -d " " -f1)
 
-     is_connected () {
-       local __var=$1
-       local mon_is_con=$(echo $CONNECTED_MONITORS | ${grep} -c $2)
-       eval $__var=$mon_is_con
-     }
-
-     is_connected EDP_IS_CONNECTED "eDP-1"
-
-     if [ $EDP_IS_CONNECTED -eq 1 ]; then
-       MONITOR="eDP-1" polybar top &
-     fi
-   '';
+    script = my.lib.readScript { 
+      path = ./startup_script.sh;
+      runtimeInputs = [ my.packages.utils.scripts.xorg.getActiveMonitors ]; 
+    };
   };
 }

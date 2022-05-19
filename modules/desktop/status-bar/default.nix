@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, my, ... }:
 let
   cfg = config.my.home;
 in {
