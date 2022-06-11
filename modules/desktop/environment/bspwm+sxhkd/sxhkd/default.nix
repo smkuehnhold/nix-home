@@ -59,10 +59,10 @@ in {
 
       # launch the default launcher
       #   modes:
-      #     (run): shows available programs. selection launches instance of selected program
+      #     (drun): shows available *desktop applications*. selection launches instance of selected program
       #     (windowcd): shows open windows. selection switches focus to selected window
       # FIXME: Maybe should rethink if I want to support different launchers. This hardcodes rofi...
-      "super + {_,alt +} space" = "${launcher} -show {run,windowcd}";
+      "super + {_,alt +} space" = "${launcher} -show {drun,windowcd}";
 
       # (bspc desktop -f DESKTOP_NAME): focusus on desktop with name DESKTOP_NAME
       # (bspc node -d DESKTOP_NAME): sends focused node to desktop with name DESKTOP_NAME
