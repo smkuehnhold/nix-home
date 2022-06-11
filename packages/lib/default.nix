@@ -25,7 +25,7 @@
 
   makePathExport = {
     runtimeInputs ? []
-  }: "export PATH=${lib.makeBinPath runtimeInputs}:$PATH";
+  }: "export PATH=\"${lib.makeBinPath runtimeInputs}:$PATH\"";
 
   # read a script from a file and add inputs to its path
   readScript = {
