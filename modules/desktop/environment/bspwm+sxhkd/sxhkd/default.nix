@@ -1,12 +1,12 @@
 { lib, config, pkgs, ... }:
 let
-  scripts = pkgs.callPackage ./scripts {}; 
+  numbers = pkgs.my.packages.utils.scripts.math; 
 
   # Not sure if there is a library function that accomplishes the same thing
   #  lib.getBin does not seem to do what I think it should do
   getBin = pkg: "${pkg}/bin/${lib.getName pkg}";
   # FIXME: At some point, might want a smarter way to select a sink
-  commands = with config; with scripts; {
+  commands = with config; {
     terminal = "${getBin my.home.terminal}";
     launcher = "${getBin my.home.launcher}";
     bspc = "${pkgs.bspwm}/bin/bspc"; 
