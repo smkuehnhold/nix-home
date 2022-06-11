@@ -4,7 +4,7 @@
   inputs = {
     system-config.url = "/etc/nixos";
     nixpkgs.follows = "system-config/nixpkgs";
-    home-manager.url = "github:nix-community/home-manager/release-21.11";
+    home-manager.url = "github:nix-community/home-manager/release-22.05";
     home-manager.inputs.nixpkgs.follows = "system-config/nixpkgs"; # Pin home-manger to system nixpkgs
     nur.url = "github:nix-community/NUR";
     knock.url = "github:BentonEdmondson/knock";
@@ -22,7 +22,7 @@
         pkgs = import nixpkgs { 
           system = "x86_64-linux";
           overlays = [ nur.overlay myPackages.overlay ] ++
-                     [ (mkSimpleOverlay "knock" knock.defaultPackage.x86_64-linux) ]; 
+                     [ (mkSimpleOverlay "knock" knock.packages.x86_64-linux.knock) ]; 
           config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
             "steam" "steam-original" "steam-runtime" "discord" "minecraft" "minecraft-launcher"
           ];

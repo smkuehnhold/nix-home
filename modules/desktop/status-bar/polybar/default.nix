@@ -3,7 +3,7 @@ let
   fonts = import ./fonts { inherit pkgs; };
   inherit (pkgs) my;
 in {
-  home.packages = with pkgs; with fonts; [ jost typicons font-awesome ];
+  home.packages = with pkgs; with fonts; [ jost typicons font-awesome_5 ];
 
   services.polybar = {
     enable = true;
@@ -102,7 +102,7 @@ in {
         monitor = "\${env:MONITOR}";
 
         font = [ 
-          "Jost*:style=Book,Regular:pixelsize=16;1" 
+          "Jost*:style=Book,Regular:pixelsize=15;1" 
           "typicons:style=Regular:pixelsize=21"
           "Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid:pixelsize=12;1"
           "Font Awesome 5 Free,Font Awesome 5 Free Regular:style=Regular:pixelsize=12;1"
@@ -111,7 +111,6 @@ in {
         height = "1.75%";
         width = "99.7%";
         offset.x = "0.15%";
-        
 
         modules = {
           left = "pager";
