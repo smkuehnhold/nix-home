@@ -58,7 +58,10 @@
       "inputs": {
         "base64-src": "base64-src",
         "gourou-src": "gourou-src",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": [
+          "system-config",
+          "nixpkgs"
+        ],
         "pugixml-src": "pugixml-src",
         "updfparser-src": "updfparser-src"
       },
@@ -77,22 +80,6 @@
       }
     },
     "nixpkgs": {
-      "locked": {
-        "lastModified": 1654230545,
-        "narHash": "sha256-8Vlwf0x8ow6pPOK2a04bT+pxIeRnM1+O0Xv9/CuDzRs=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "236cc2971ac72acd90f0ae3a797f9f83098b17ec",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
       "locked": {
         "lastModified": 1653936696,
         "narHash": "sha256-M6bJShji9AIDZ7Kh7CPwPBPb/T7RiVev2PAcOi4fxDQ=",
@@ -154,7 +141,7 @@
     },
     "system-config": {
       "inputs": {
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs"
       },
       "locked": {
         "lastModified": 1639090691,

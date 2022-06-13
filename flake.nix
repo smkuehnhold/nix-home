@@ -7,7 +7,9 @@
     home-manager.url = "github:nix-community/home-manager/release-22.05";
     home-manager.inputs.nixpkgs.follows = "system-config/nixpkgs"; # Pin home-manger to system nixpkgs
     nur.url = "github:nix-community/NUR";
+    nur.inputs.nixpkgs.follows = "system-config/nixpkgs";
     knock.url = "github:BentonEdmondson/knock";
+    knock.inputs.nixpkgs.follows = "system-config/nixpkgs";
   };
 
   outputs = { home-manager, nixpkgs, nur, knock, ... }: let
