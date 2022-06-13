@@ -1,0 +1,7 @@
+{ ... }:
+
+{
+  imports = [
+    ./nix-index.nix
+  ];
+}
