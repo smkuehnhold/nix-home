@@ -5,6 +5,12 @@ let
 in {
   home.packages = with pkgs; with fonts; [ jost typicons font-awesome_5 ];
 
+  # FIXME: What about other desktop environments?
+  # initExtra does not work because it occurs before bspwm starts
+  xsession.windowManager.bspwm.extraConfig = ''
+    systemctl --user restart polybar.service
+  '';
+
   services.polybar = {
     enable = true;
 
