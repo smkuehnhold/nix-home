@@ -13,7 +13,9 @@ in {
       "primary" = [ "1" "2" "3" "4" ];
     };
     extraConfig = ''
-      PATH=${lib.makeBinPath [ getActiveMonitors ]}:$PATH 
+
+      # show cursor before any windows open
+      xsetroot -cursor_name left_ptr
     '';
   };
 }
