@@ -273,7 +273,7 @@ in {
     };
 
     script = my.lib.readScript { 
-      path = ./startup_script.sh;
+      path = ./startup-script.sh;
       runtimeInputs = [ my.packages.utils.scripts.xorg.getActiveMonitors ]; 
     };
   };
