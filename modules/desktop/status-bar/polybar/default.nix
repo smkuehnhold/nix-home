@@ -236,7 +236,7 @@ in {
         module.margin = 1;
 
         modules = {
-          right = "pipewire wireless-network wired-network";
+          right = "wireless-network wired-network";
         }; 
       };
 
@@ -267,7 +267,7 @@ in {
         module.margin = 1;
 
         modules = {
-          right = "pipewire wireless-network wired-network";
+          right = "wireless-network wired-network";
         }; 
       };
     };
