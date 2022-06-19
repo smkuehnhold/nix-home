@@ -74,6 +74,93 @@ in {
         };
       };
 
+      # Seems like every bar needs a module??
+      "module/null" = {
+        type = "custom/text";
+        content = " ";
+      };
+
+      "module/wireless-network" = {
+        type = "internal/network";
+
+        interface = "wlan0";
+
+        format = {
+          connected = "<label-connected> <ramp-signal>";
+          disconnected = "";
+        };
+
+        label.connected = {
+          text = "%essid%";
+          foreground = "#FFFFFF";
+        };
+
+        ramp.signal = [
+          {
+            text = "";
+            font = 3;
+            foreground = "#FFFFFF";
+          }
+        ];
+      };
+
+      "module/wired-network" = {
+        type = "internal/network";
+
+        interface = "enp137s0u1";
+
+        format = {
+          connected = "<label-connected> <ramp-signal>";
+          disconnected = "";
+        };
+
+        label.connected = {
+          text = "%ifname%";
+          foreground = "#FFFFFF";
+        };
+
+        ramp.signal = [
+          {
+            text = "";
+            font = 3;
+            foreground = "#FFFFFF";
+          }
+        ];
+      };
+
+      # stolen from:
+      # https://github.com/jonringer/nixpkgs-config/blob/a0f7694412e269c1c26db91a1c4cda87e3242a53/polybar-config#L226
+      "module/pipewire" = let
+        polybarPipewire = "${my.lib.writeShellScriptBin {
+          name = "polybar-pipewire";
+          text = builtins.readFile ./polybar-pipewire.sh;
+          runtimeInputs = with pkgs; [
+            coreutils gnused pamixer pulseaudio pipewire
+          ];
+        }}/bin/polybar-pipewire";
+      in{
+        type = "custom/script";
+        interval = "1.0";
+
+        label = {
+          text = "%output% ";
+        };
+
+        exec = polybarPipewire;
+
+        click = {
+          # right = "exec pavucontrol &";
+          left = "${polybarPipewire} mute &";
+        };
+
+        scroll = {
+          up = "${polybarPipewire} up &";
+          down = "${polybarPipewire} down &";
+        };
+
+      };
+
+
       "bar/top" = {
         wm-restack = "bspwm";
 
@@ -90,15 +177,12 @@ in {
         width = "99.7%";
         offset.x = "0.15%";
 
+        module.margin = 1;
+
         modules = {
           left = "pager";
           center = "date";
           right = "time";
-          margins = {
-            left = "1.25%";
-            center = "1.25%";
-            right = "1.25%";
-          };
         }; 
       };
 
@@ -118,15 +202,72 @@ in {
         width = "99.7%";
         offset.x = "0.15%";
 
+        module.margin = 1;
+
         modules = {
           left = "pager";
           center = "date";
           right = "time";
-          margins = {
-            left = "1.25%";
-            center = "1.25%";
-            right = "1.25%";
-          };
+        }; 
+      };
+
+      "bar/bottom" = {
+        wm-restack = "bspwm";
+
+        monitor = "\${env:MONITOR}";
+
+        bottom = true;
+        # Gives us the ability to call polybar-msg cmd toggle
+        enable.ipc = true;
+
+        font = [ 
+          "Jost*:style=Book,Regular:pixelsize=20;1" 
+          "typicons:style=Regular:pixelsize=26"
+          "Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid:pixelsize=16;1"
+          "Font Awesome 5 Free,Font Awesome 5 Free Regular:style=Regular:pixelsize=16;1"
+        ];
+
+        tray.position = "left";
+
+        height = "1.75%";
+        width = "99.7%";
+        offset.x = "0.15%";
+
+        module.margin = 1;
+
+        modules = {
+          right = "pipewire wireless-network wired-network";
+        }; 
+      };
+
+      "bar/bottom-desktop" = {
+        wm-restack = "bspwm";
+
+        monitor = "\${env:MONITOR}";
+
+        bottom = true;
+        enable.ipc = true;
+
+        font = [ 
+          "Jost*:style=Book,Regular:pixelsize=15;1" 
+          "typicons:style=Regular:pixelsize=21"
+          "Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid:pixelsize=12;1"
+          "Font Awesome 5 Free,Font Awesome 5 Free Regular:style=Regular:pixelsize=12;1"
+        ];
+
+        tray = {
+          position = "left";
+          offset.x = "0.15%";
+        }; 
+
+        height = "1.75%";
+        width = "99.7%";
+        offset.x = "0.15%";
+
+        module.margin = 1;
+
+        modules = {
+          right = "pipewire wireless-network wired-network";
         }; 
       };
     };

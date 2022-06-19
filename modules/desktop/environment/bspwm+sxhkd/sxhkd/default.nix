@@ -112,6 +112,10 @@ in {
 
       # Cycle desktop between monocle and tiled layouts
       "super + m" = "bspc desktop --layout next";
+
+      # Toggle the bottom bar
+      # FIXME: What if I don't want to padding to be 0 by default?
+      "super + b" = "bspc config bottom_padding 0 && polybar-msg cmd toggle";
     }; 
   };
 }
