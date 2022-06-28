@@ -1,5 +1,27 @@
 {
   "nodes": {
+    "alejandra": {
+      "inputs": {
+        "flakeCompat": "flakeCompat",
+        "nixpkgs": [
+          "wired",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1652974241,
+        "narHash": "sha256-0AolxQtKj3Oek0WSbODDpPVO5Ih8PXHOA3qXEKPB4dQ=",
+        "owner": "kamadorueda",
+        "repo": "alejandra",
+        "rev": "0be1462419fc73270a5dc0f84f8092603890b029",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kamadorueda",
+        "repo": "alejandra",
+        "type": "github"
+      }
+    },
     "base64-src": {
       "flake": false,
       "locked": {
@@ -14,6 +36,22 @@
       "original": {
         "type": "git",
         "url": "https://gist.github.com/f0fd86b6c73063283afe550bc5d77594.git"
+      }
+    },
+    "flakeCompat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1648199409,
+        "narHash": "sha256-JwPKdC2PoVBkG6E+eWw3j6BMR6sL3COpYWfif7RVb8Y=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "64a525ee38886ab9028e6f61790de0832aa3ef03",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
       }
     },
     "gourou-src": {
@@ -40,11 +78,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1654113405,
-        "narHash": "sha256-VpK+0QaWG2JRgB00lw77N9TjkE3ec0iMYIX1TzGpxa4=",
+        "lastModified": 1656169755,
+        "narHash": "sha256-Nlnm4jeQWEGjYrE6hxi/7HYHjBSZ/E0RtjCYifnNsWk=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "ac2287df5a2d6f0a44bbcbd11701dbbf6ec43675",
+        "rev": "4a3d01fb53f52ac83194081272795aa4612c2381",
         "type": "github"
       },
       "original": {
@@ -66,16 +104,37 @@
         "updfparser-src": "updfparser-src"
       },
       "locked": {
-        "lastModified": 1654747276,
-        "narHash": "sha256-nTGfYBMIYO1a1l7CXKJloAwXEkWlH6cJtEXQp1J8bsI=",
+        "lastModified": 1655869362,
+        "narHash": "sha256-o+09z+nI9MK71bp1+NVzgy7kQiNFSYBet2NbPBG/G28=",
         "owner": "BentonEdmondson",
         "repo": "knock",
-        "rev": "40818270490f107f58742ac2e8ec56e54312ec34",
+        "rev": "26fe53dfd8e20fbf6147996b763b76dac3ad8a93",
         "type": "github"
       },
       "original": {
         "owner": "BentonEdmondson",
         "repo": "knock",
+        "type": "github"
+      }
+    },
+    "naersk": {
+      "inputs": {
+        "nixpkgs": [
+          "wired",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1652722411,
+        "narHash": "sha256-FxzNgYiH9c91hUVAntcjrqY//KOTUPP2a4e8Wyuysxg=",
+        "owner": "nix-community",
+        "repo": "naersk",
+        "rev": "94beb7a3edfeb3bcda65fa3f2ebc48ec6b40bf72",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "naersk",
         "type": "github"
       }
     },
@@ -97,11 +156,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1654842944,
-        "narHash": "sha256-vt/RS6W32xx96rmwm15tzSx9Xd0wg5p8qherY7H3+wo=",
+        "lastModified": 1656369684,
+        "narHash": "sha256-9rjK+d7rBdSRsGBp9C5pSrpYc4EYZept8U4yBFWzrWs=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "f378bcebe4455277d6deb118f11aaaad69db9e9a",
+        "rev": "a36e6cc746133540cb6f94a62679c0954a0e7590",
         "type": "github"
       },
       "original": {
@@ -136,7 +195,8 @@
           "nixpkgs"
         ],
         "nur": "nur",
-        "system-config": "system-config"
+        "system-config": "system-config",
+        "wired": "wired"
       }
     },
     "system-config": {
@@ -144,8 +204,8 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1639090691,
-        "narHash": "sha256-fBTi/U3eT5qKgq6l5sPQZBbj9uAz2fOTwzzjpsTWOq0=",
+        "lastModified": 1655253519,
+        "narHash": "sha256-1bRJvzyTVhm9SKziCdZWPVELzQZt/MZR0u3qylFjr1Q=",
         "type": "git",
         "url": "file:///etc/nixos"
       },
@@ -168,6 +228,45 @@
       "original": {
         "type": "git",
         "url": "git://soutade.fr/updfparser.git"
+      }
+    },
+    "utils": {
+      "locked": {
+        "lastModified": 1652776076,
+        "narHash": "sha256-gzTw/v1vj4dOVbpBSJX4J0DwUR6LIyXo7/SuuTJp1kM=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "04c1b180862888302ddfb2e3ad9eaa63afc60cf8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "wired": {
+      "inputs": {
+        "alejandra": "alejandra",
+        "naersk": "naersk",
+        "nixpkgs": [
+          "system-config",
+          "nixpkgs"
+        ],
+        "utils": "utils"
+      },
+      "locked": {
+        "lastModified": 1654768600,
+        "narHash": "sha256-Z+y4dxNfn7OCTw6dFOVnEvEaq9FS6HRaIomzfdpVfK8=",
+        "owner": "Toqozz",
+        "repo": "wired-notify",
+        "rev": "35f91e44d30748bcebd2a731765718ac6f5ce567",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Toqozz",
+        "repo": "wired-notify",
+        "type": "github"
       }
     }
   },

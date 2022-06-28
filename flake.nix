@@ -10,9 +10,11 @@
     nur.inputs.nixpkgs.follows = "system-config/nixpkgs";
     knock.url = "github:BentonEdmondson/knock";
     knock.inputs.nixpkgs.follows = "system-config/nixpkgs";
+    wired.url = "github:Toqozz/wired-notify";
+    wired.inputs.nixpkgs.follows = "system-config/nixpkgs";
   };
 
-  outputs = { home-manager, nixpkgs, nur, knock, ... }: let
+  outputs = { home-manager, nixpkgs, nur, knock, wired, ... }: let
     myPackages = (import ./packages {});
     mkSimpleOverlay = pkgName: pkg: (final: prev: {
       "${pkgName}" = pkg;
@@ -21,19 +23,20 @@
     
     homeConfigurations = {
       smkuehnhold = home-manager.lib.homeManagerConfiguration rec {
+        system = "x86_64-linux";
         pkgs = import nixpkgs { 
-          system = "x86_64-linux";
-          overlays = [ nur.overlay myPackages.overlay ] ++
-                     [ (mkSimpleOverlay "knock" knock.packages.x86_64-linux.knock) ]; 
+          inherit system;
+          overlays = [ nur.overlay myPackages.overlay wired.overlays."${system}" ] ++
+                     [ (mkSimpleOverlay "knock" knock.packages."${system}".knock) ]; 
           config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
             "steam" "steam-original" "steam-runtime" "discord" "minecraft" "minecraft-launcher"
           ];
         };
-        system = "x86_64-linux";
         homeDirectory = "/home/smkuehnhold";
         username = "smkuehnhold";
         extraModules = [
           ./modules 
+          wired.homeManagerModules.default
         ];
         configuration = { };
       };

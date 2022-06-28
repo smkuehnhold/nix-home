@@ -6,6 +6,7 @@
     ./browser
     ./environment
     ./launcher
+    ./notifications
     ./status-bar
     ./terminal
     ./xinitrc.nix
