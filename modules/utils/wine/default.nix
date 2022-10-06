@@ -2,8 +2,6 @@
 
 {
   imports = [
-    ./ebooks
-    ./nix
-    ./wine
+    ./bottles
   ];  
 }

@@ -38,6 +38,21 @@
         "url": "https://gist.github.com/f0fd86b6c73063283afe550bc5d77594.git"
       }
     },
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1659877975,
+        "narHash": "sha256-zllb8aq3YO3h8B/U0/J1WBgAL8EX5yWf5pMj3G0NAmc=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "c0e246b9b83f637f4681389ecabcb2681b4f3af0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "flakeCompat": {
       "flake": false,
       "locked": {
@@ -95,6 +110,7 @@
     "knock": {
       "inputs": {
         "base64-src": "base64-src",
+        "flake-utils": "flake-utils",
         "gourou-src": "gourou-src",
         "nixpkgs": [
           "system-config",
@@ -104,37 +120,16 @@
         "updfparser-src": "updfparser-src"
       },
       "locked": {
-        "lastModified": 1655869362,
-        "narHash": "sha256-o+09z+nI9MK71bp1+NVzgy7kQiNFSYBet2NbPBG/G28=",
+        "lastModified": 1662251416,
+        "narHash": "sha256-jMhrC8VOOLXuIAURRxikZZLlUwPsPQM22DJm0Bsf47o=",
         "owner": "BentonEdmondson",
         "repo": "knock",
-        "rev": "26fe53dfd8e20fbf6147996b763b76dac3ad8a93",
+        "rev": "488fcabd69ca6f9e306a3ca30ccef600209115b1",
         "type": "github"
       },
       "original": {
         "owner": "BentonEdmondson",
         "repo": "knock",
-        "type": "github"
-      }
-    },
-    "naersk": {
-      "inputs": {
-        "nixpkgs": [
-          "wired",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1652722411,
-        "narHash": "sha256-FxzNgYiH9c91hUVAntcjrqY//KOTUPP2a4e8Wyuysxg=",
-        "owner": "nix-community",
-        "repo": "naersk",
-        "rev": "94beb7a3edfeb3bcda65fa3f2ebc48ec6b40bf72",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "naersk",
         "type": "github"
       }
     },
@@ -156,11 +151,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1656369684,
-        "narHash": "sha256-9rjK+d7rBdSRsGBp9C5pSrpYc4EYZept8U4yBFWzrWs=",
+        "lastModified": 1664400119,
+        "narHash": "sha256-G6gKRK9uOk7kt1uWCzmyuLB/qdQtGO8mxjs/dtTIr9A=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "a36e6cc746133540cb6f94a62679c0954a0e7590",
+        "rev": "e378da2e2cd205a55a0203b91162fefba04087e6",
         "type": "github"
       },
       "original": {
@@ -201,11 +196,12 @@
     },
     "system-config": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "waveforms": "waveforms"
       },
       "locked": {
         "lastModified": 1655253519,
-        "narHash": "sha256-1bRJvzyTVhm9SKziCdZWPVELzQZt/MZR0u3qylFjr1Q=",
+        "narHash": "sha256-ToLH14zMCrn4FbeKK1rHV92F4r7U6V1w03VjxJWKTEg=",
         "type": "git",
         "url": "file:///etc/nixos"
       },
@@ -245,10 +241,30 @@
         "type": "github"
       }
     },
+    "waveforms": {
+      "inputs": {
+        "nixpkgs": [
+          "system-config",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1650227629,
+        "narHash": "sha256-YDDGG9dxquBf6HpWCpoWd3weGY3tvu+yExyoWzZF0E8=",
+        "owner": "liff",
+        "repo": "waveforms-flake",
+        "rev": "57d93dd68642d85e3960c2cd720eba9fbc67fd03",
+        "type": "github"
+      },
+      "original": {
+        "owner": "liff",
+        "repo": "waveforms-flake",
+        "type": "github"
+      }
+    },
     "wired": {
       "inputs": {
         "alejandra": "alejandra",
-        "naersk": "naersk",
         "nixpkgs": [
           "system-config",
           "nixpkgs"
@@ -256,11 +272,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1654768600,
-        "narHash": "sha256-Z+y4dxNfn7OCTw6dFOVnEvEaq9FS6HRaIomzfdpVfK8=",
+        "lastModified": 1664316438,
+        "narHash": "sha256-tjsDGUMDXiKAMvkajpn7REm7o+42trIq1g/MqGWC/pc=",
         "owner": "Toqozz",
         "repo": "wired-notify",
-        "rev": "35f91e44d30748bcebd2a731765718ac6f5ce567",
+        "rev": "4bb3dfff38934c47be818f497af65d1e3a01311c",
         "type": "github"
       },
       "original": {

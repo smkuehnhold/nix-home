@@ -26,7 +26,7 @@
         system = "x86_64-linux";
         pkgs = import nixpkgs { 
           inherit system;
-          overlays = [ nur.overlay myPackages.overlay wired.overlays."${system}" ] ++
+          overlays = [ nur.overlay myPackages.overlay wired.overlays.default ] ++
                      [ (mkSimpleOverlay "knock" knock.packages."${system}".knock) ]; 
           config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
             "steam" "steam-original" "steam-runtime" "discord" "minecraft" "minecraft-launcher"

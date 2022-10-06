@@ -9,6 +9,7 @@
     ./notifications
     ./status-bar
     ./terminal
+    ./video
     ./xinitrc.nix
   ]; 
 
