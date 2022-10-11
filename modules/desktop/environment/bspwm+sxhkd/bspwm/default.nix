@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let 
-  inherit (pkgs) lib;
+  inherit (pkgs) lib bspwm;
   inherit (pkgs.xorg) xrandr;
   inherit (pkgs.my.lib) writeShellScriptBin;
   inherit (pkgs.my.packages.utils.scripts.xorg) getActiveMonitors;
@@ -27,21 +27,31 @@ in {
   xsession.windowManager.bspwm = {
     enable = true;
     monitors = {
-#      "primary" = [ "1" "2" "3" "4" ];
+      "primary" = [ "1" "2" "3" "4" ];
   #     "eDP-1" = [ "1" "2" "3" "4" ];
   #     "DP-1" = ["5" "6" "7" "8" ];
     };
-    extraConfig = ''
+#    extraConfig = ''
       # show cursor before any windows open
-      xsetroot -cursor_name left_ptr
+#      xsetroot -cursor_name left_ptr
 
-      ${writeShellScriptBin {
-        name = "bspwm_startup";
-        text = builtins.readFile ./startup.sh;
-        runtimeInputs = [ xrandr getActiveMonitors ];
-      }}/bin/bspwm_startup
+      #${writeShellScriptBin {
+      #  name = "bspwm_startup";
+      #  text = builtins.readFile ./startup.sh;
+      #  runtimeInputs = [ xrandr getActiveMonitors ];
+      #}}/bin/bspwm_startup
 
-      bspc monitor 'primary' -d '1' '2' '3' '4'
-    '';
+      #bspc monitor 'primary' -d '1' '2' '3' '4'
+#    '';
   };
+
+  # Restart bspwm when autorandr mode switches
+  # FIXME: Want a fancier preswitch that moves the monitors...
+  programs.autorandr.hooks.preswitch."remove-desktops" = ''
+    ${bspwm}/bin/bspc monitor primary --remove
+  '';
+
+  programs.autorandr.hooks.postswitch."restart-bspwm" = ''
+    ${bspwm}/bin/bspc wm -r 
+  '';
 }

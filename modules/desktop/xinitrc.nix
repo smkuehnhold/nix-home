@@ -8,5 +8,9 @@
   xsession = {
     enable = true;
     scriptPath = ".xinitrc";
+    initExtra = ''
+      # Detect and load appropriate configuration
+      autorandr -c
+    '';
   };
 }

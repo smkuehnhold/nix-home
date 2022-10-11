@@ -3,6 +3,7 @@
 {
   imports = [ 
     ./audio
+    ./autorandr
     ./browser
     ./environment
     ./launcher
