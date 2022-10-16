@@ -1,12 +1,24 @@
 { pkgs, ...}:
 
 {
-  # Use FHS variant for now
-  # FIXME: Change to non-FHS variant when I get a better idea of what extensions I want
-  home.packages = with pkgs; [ vscodium-fhs ];
-  
+
+  home.packages = [
+    pkgs.rnix-lsp # nix LSP for nix-ide
+  ];
+
   # map codium to code
   home.shellAliases = {
     "code" = "codium";
+  };
+
+  programs.vscode = {
+    enable = true;
+    # use freely-licensed binary so I don't have to add to allowUnfreePredicate
+    package = pkgs.vscodium; 
+    extensions = [
+      pkgs.vscode-extensions.jnoortheen.nix-ide
+    ]; 
+    # Needed to pass impurity check
+    mutableExtensionsDir = false;
   };
 }

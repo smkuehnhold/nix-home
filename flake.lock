@@ -53,6 +53,21 @@
         "type": "github"
       }
     },
+    "flake-utils_2": {
+      "locked": {
+        "lastModified": 1659877975,
+        "narHash": "sha256-zllb8aq3YO3h8B/U0/J1WBgAL8EX5yWf5pMj3G0NAmc=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "c0e246b9b83f637f4681389ecabcb2681b4f3af0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "flakeCompat": {
       "flake": false,
       "locked": {
@@ -191,6 +206,7 @@
         ],
         "nur": "nur",
         "system-config": "system-config",
+        "vscode-marketplace": "vscode-marketplace",
         "wired": "wired"
       }
     },
@@ -238,6 +254,28 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "vscode-marketplace": {
+      "inputs": {
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": [
+          "system-config",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1664277918,
+        "narHash": "sha256-bpYcaNTpvYvEp2rifhp5u88AG2qG4CPpplOxB8NQLz4=",
+        "owner": "AmeerTaweel",
+        "repo": "nix-vscode-marketplace",
+        "rev": "6b087f84477f43b04f9bc7f54d4f3685bfee2774",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AmeerTaweel",
+        "repo": "nix-vscode-marketplace",
         "type": "github"
       }
     },
