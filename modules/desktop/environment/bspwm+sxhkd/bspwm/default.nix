@@ -3,7 +3,7 @@ let
   inherit (pkgs) lib bspwm;
   inherit (pkgs.xorg) xrandr;
   inherit (pkgs.my.lib) writeShellScriptBin;
-  inherit (pkgs.my.packages.utils.scripts.xorg) getActiveMonitors;
+  inherit (pkgs.my.packages.utils.scripts.xorg) getActiveMonitors getScalingFactor;
 in {
   # xtitle is used in a lot of bspc scripts to get sensible names
   # it is also useful to debug during runtime
@@ -31,6 +31,13 @@ in {
   #     "eDP-1" = [ "1" "2" "3" "4" ];
   #     "DP-1" = ["5" "6" "7" "8" ];
     };
+
+    extraConfig = ''
+      SCALING_FACTOR="$(${getScalingFactor}/bin/get_scaling_factor)"
+
+      export QT_AUTO_SCREEN_SCALE_FACTOR="$SCALING_FACTOR"
+      export GDK_SCALE="$SCALING_FACTOR"
+    '';
 #    extraConfig = ''
       # show cursor before any windows open
 #      xsetroot -cursor_name left_ptr

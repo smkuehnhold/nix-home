@@ -1,6 +1,10 @@
 { ... }:
 
 {
+  imports = [
+    ./preswitch-change-dpi.nix
+  ];
+
   programs.autorandr = {
     enable = true;
     profiles = {
