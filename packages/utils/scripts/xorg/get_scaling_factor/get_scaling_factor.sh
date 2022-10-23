@@ -1,4 +1,9 @@
-DPI="$(xrdb -query Xft.dpi | cut -f 2)"
-SCALING_FACTOR="$(( "$DPI" / 96))"
+DPI="$(xrdb -query | grep "^Xft.dpi" | cut -f 2)"
+
+if test -z "$DPI"; then
+    SCALING_FACTOR=1
+else
+    SCALING_FACTOR="$(("$DPI" / 96))"
+fi
 
 echo "$SCALING_FACTOR"
