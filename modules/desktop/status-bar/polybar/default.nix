@@ -160,6 +160,40 @@ in {
 
       };
 
+      "module/battery" = {
+        type = "internal/battery";
+
+        adapter = "ACAD";
+        battery = "BAT1";
+
+        poll.interval = 0;
+
+        label.charging = {
+          text = "%percentage%%";
+          foreground = "#FFFFFF";
+        };
+
+        label.discharging = {
+          text = "%percentage%%";
+          foreground = "#FFFFFF";
+        };
+
+        ramp.capacity = [
+          {
+            text = "";
+            font = 3;
+            foreground = "#FFFFFF";
+          }
+        ];
+
+        format = {
+          # FIXME
+          # For some reason, framework power suppy always reports discharging, which is unfortunate...
+          # See `cat /sys/class/power_supply/BAT1/status`
+          charging = "<label-charging> <ramp-capacity>";
+          discharging = "<label-discharging>";
+        };
+      };
 
       "bar/top" = {
         wm-restack = "bspwm";
@@ -236,7 +270,7 @@ in {
         module.margin = 1;
 
         modules = {
-          right = "wireless-network wired-network";
+          right = "wireless-network wired-network battery";
         }; 
       };
 
@@ -267,7 +301,7 @@ in {
         module.margin = 1;
 
         modules = {
-          right = "wireless-network wired-network";
+          right = "wireless-network wired-network battery";
         }; 
       };
     };
