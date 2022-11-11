@@ -166,7 +166,7 @@ in {
         adapter = "ACAD";
         battery = "BAT1";
 
-        poll.interval = 0;
+        #poll.interval = 0;
 
         label.charging = {
           text = "%percentage%%";
