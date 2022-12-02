@@ -4,10 +4,11 @@
   inputs = {
     system-config.url = "/etc/nixos";
     nixpkgs.follows = "system-config/nixpkgs";
-    home-manager.url = "github:nix-community/home-manager/release-22.05";
+    home-manager.url = "github:nix-community/home-manager/release-22.11";
     home-manager.inputs.nixpkgs.follows = "system-config/nixpkgs"; # Pin home-manger to system nixpkgs
     nur.url = "github:nix-community/NUR";
-    nur.inputs.nixpkgs.follows = "system-config/nixpkgs";
+    # nur overlay implicitly uses pkgs?
+    # nur.inputs.nixpkgs.follows = "system-config/nixpkgs";
     knock.url = "github:BentonEdmondson/knock";
     knock.inputs.nixpkgs.follows = "system-config/nixpkgs";
     wired.url = "github:Toqozz/wired-notify";
@@ -23,9 +24,10 @@
     });
   in {
     
-    homeConfigurations = {
-      smkuehnhold = home-manager.lib.homeManagerConfiguration rec {
-        system = "x86_64-linux";
+    homeConfigurations = let
+      system = "x86_64-linux";
+    in {
+      smkuehnhold = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs { 
           inherit system;
           overlays = [ nur.overlay myPackages.overlay wired.overlays.default ] ++
@@ -36,16 +38,20 @@
                        (mkSimpleOverlay "vscode-marketplace" vscode-marketplace.packages."${system}".vscode-marketplace) 
                      ];
           config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
-            "steam" "steam-original" "steam-runtime" "discord" "minecraft" "minecraft-launcher"
+            "steam" "steam-original" "steam-runtime" "discord" "minecraft" "minecraft-launcher" "steam-run"
           ];
         };
-        homeDirectory = "/home/smkuehnhold";
-        username = "smkuehnhold";
-        extraModules = [
-          ./modules 
+        modules = [
+          {
+            home = {
+              username = "smkuehnhold";
+              homeDirectory = "/home/smkuehnhold";
+              stateVersion = "22.05";
+            };
+          }
+          ./modules
           wired.homeManagerModules.default
         ];
-        configuration = { };
       };
     };
 
