@@ -13,11 +13,13 @@
     knock.inputs.nixpkgs.follows = "system-config/nixpkgs";
     wired.url = "github:Toqozz/wired-notify";
     wired.inputs.nixpkgs.follows = "system-config/nixpkgs";
-    vscode-marketplace.url = "github:AmeerTaweel/nix-vscode-marketplace";
-    vscode-marketplace.inputs.nixpkgs.follows = "system-config/nixpkgs";
+    # Pin nix-vscode-extensions because latest seems to rely on unstable?                
+    # https://github.com/nix-community/nix-vscode-extensions/issues/11
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions/83b9f149ffc2a6cdd44d8083050e7e245706ae2f";
+    nix-vscode-extensions.inputs.nixpkgs.follows = "system-config/nixpkgs";
   };
 
-  outputs = { home-manager, nixpkgs, nur, knock, wired, vscode-marketplace, ... }: let
+  outputs = { home-manager, nixpkgs, nur, knock, wired, nix-vscode-extensions, ... }: let
     myPackages = (import ./packages {});
     mkSimpleOverlay = pkgName: pkg: (final: prev: {
       "${pkgName}" = pkg;
@@ -33,9 +35,7 @@
           overlays = [ nur.overlay myPackages.overlay wired.overlays.default ] ++
                      [ 
                        (mkSimpleOverlay "knock" knock.packages."${system}".knock) 
-                       # vscode-marketplace.overlays."${system}" seems to be invalid?
-                       #   "Not a function"
-                       (mkSimpleOverlay "vscode-marketplace" vscode-marketplace.packages."${system}".vscode-marketplace) 
+                       nix-vscode-extensions.overlays.default
                      ];
           config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
             "steam" "steam-original" "steam-runtime" "discord" "minecraft" "minecraft-launcher" "steam-run"
