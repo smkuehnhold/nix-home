@@ -17,7 +17,10 @@
     package = pkgs.vscodium; 
     extensions = [
       pkgs.vscode-extensions.jnoortheen.nix-ide
+
+      # swift extension and dependencies
       pkgs.vscode-marketplace.sswg.swift-lang
+      pkgs.vscode-marketplace.vadimcn.vscode-lldb
     ]; 
     # Needed to pass impurity check
     mutableExtensionsDir = false;
