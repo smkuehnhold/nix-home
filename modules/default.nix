@@ -4,7 +4,7 @@
 
   imports = [
     ./benchmark
-    ./default-modules
+    ./default
     ./desktop
     ./development
     ./games
