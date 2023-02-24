@@ -5,6 +5,7 @@
     ./ebooks
     ./nix
     ./scanner
+    ./taskwarrior
     ./wine
   ];  
 }
