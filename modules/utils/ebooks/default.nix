@@ -1,5 +1,5 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs; [ knock ];
+  # home.packages = with pkgs; [ knock ];
 }

@@ -9,8 +9,9 @@
     nur.url = "github:nix-community/NUR";
     # nur overlay implicitly uses pkgs?
     # nur.inputs.nixpkgs.follows = "system-config/nixpkgs";
-    knock.url = "github:BentonEdmondson/knock";
-    knock.inputs.nixpkgs.follows = "system-config/nixpkgs";
+    # FIXME: KNOCK DELETED?!?!
+    # knock.url = "github:BentonEdmondson/knock";
+    # knock.inputs.nixpkgs.follows = "system-config/nixpkgs";
     wired.url = "github:Toqozz/wired-notify";
     wired.inputs.nixpkgs.follows = "system-config/nixpkgs";
     # Pin nix-vscode-extensions because latest seems to rely on unstable?                
@@ -19,7 +20,7 @@
     nix-vscode-extensions.inputs.nixpkgs.follows = "system-config/nixpkgs";
   };
 
-  outputs = { home-manager, nixpkgs, nur, knock, wired, nix-vscode-extensions, ... }: let
+  outputs = { home-manager, nixpkgs, nur, wired, nix-vscode-extensions, ... }: let
     myPackages = (import ./packages {});
     mkSimpleOverlay = pkgName: pkg: (final: prev: {
       "${pkgName}" = pkg;
@@ -29,12 +30,36 @@
     homeConfigurations = let
       system = "x86_64-linux";
     in {
-      smkuehnhold = home-manager.lib.homeManagerConfiguration {
+      "smkuehnhold@smk-framework" = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs { 
           inherit system;
           overlays = [ nur.overlay myPackages.overlay wired.overlays.default ] ++
                      [ 
-                       (mkSimpleOverlay "knock" knock.packages."${system}".knock) 
+                       #(mkSimpleOverlay "knock" knock.packages."${system}".knock) 
+                       nix-vscode-extensions.overlays.default
+                     ];
+          config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
+            "steam" "steam-original" "steam-runtime" "discord" "minecraft" "minecraft-launcher" "steam-run"
+          ];
+        };
+        modules = [
+          {
+            home = {
+              username = "smkuehnhold";
+              homeDirectory = "/home/smkuehnhold";
+              stateVersion = "22.05";
+            };
+          }
+          ./modules
+          wired.homeManagerModules.default
+        ];
+      };
+      "smkuehnhold@smk-desktop" = home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs { 
+          inherit system;
+          overlays = [ nur.overlay myPackages.overlay wired.overlays.default ] ++
+                     [ 
+                       #(mkSimpleOverlay "knock" knock.packages."${system}".knock) 
                        nix-vscode-extensions.overlays.default
                      ];
           config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
@@ -54,9 +79,5 @@
         ];
       };
     };
-
   };
-
-
-
 }

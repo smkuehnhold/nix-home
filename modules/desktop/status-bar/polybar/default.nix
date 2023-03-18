@@ -3,7 +3,7 @@ let
   fonts = import ./fonts { inherit pkgs; };
   inherit (pkgs) my;
 in {
-  home.packages = with pkgs; with fonts; [ jost typicons font-awesome_5 ];
+  home.packages = with pkgs; with fonts; [ jost font-awesome_5 ];
 
   # FIXME: What about other desktop environments?
   # initExtra does not work because it occurs before bspwm starts
