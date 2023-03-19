@@ -1,6 +1,8 @@
 { pkgs, ...}:
 
-{
+let
+  customExtensions = (pkgs.callPackage ./extensions {});
+in {
 
   home.packages = [
     pkgs.rnix-lsp # nix LSP for nix-ide
@@ -20,7 +22,8 @@
 
       # swift extension and dependencies
       pkgs.vscode-marketplace.sswg.swift-lang
-      pkgs.vscode-marketplace.vadimcn.vscode-lldb
+      #pkgs.vscode-marketplace.vadimcn.vscode-lldb
+      customExtensions.vscode-lldb
     ]; 
     # Needed to pass impurity check
     mutableExtensionsDir = false;

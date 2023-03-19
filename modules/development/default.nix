@@ -4,7 +4,7 @@
   imports = [
     ./direnv.nix
     ./swift
-    ./vscodium.nix
+    ./vscodium
   ];  
 }
 
