@@ -1,5 +1,5 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs; [ polymc ccemux ];
+  home.packages = with pkgs; [ prismlauncher ccemux ];
 }
