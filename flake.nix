@@ -20,7 +20,7 @@
     nix-vscode-extensions.inputs.nixpkgs.follows = "system-config/nixpkgs";
   };
 
-  outputs = { home-manager, nixpkgs, nur, wired, nix-vscode-extensions, ... }: let
+  outputs = { system-config, nixpkgs, home-manager, nur, wired, nix-vscode-extensions, ... }: let
     myPackages = (import ./packages {});
     mkSimpleOverlay = pkgName: pkg: (final: prev: {
       "${pkgName}" = pkg;
@@ -37,6 +37,7 @@
                      [ 
                        #(mkSimpleOverlay "knock" knock.packages."${system}".knock) 
                        nix-vscode-extensions.overlays.default
+                       (mkSimpleOverlay "system-config" system-config.nixosConfigurations."smk-framework".config)
                      ];
           config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
             "steam" "steam-original" "steam-runtime" "discord" "minecraft" "minecraft-launcher" "steam-run"
@@ -52,6 +53,15 @@
           }
           ./modules
           wired.homeManagerModules.default
+          {
+            options = with nixpkgs.lib; {
+              my.system-config = mkOption {
+                default = system-config.nixosConfigurations."smk-framework".config;
+                type = types.raw;
+                readOnly = true;
+              };
+            };
+          }
         ];
       };
       "smkuehnhold@smk-desktop" = home-manager.lib.homeManagerConfiguration {
@@ -76,6 +86,15 @@
           }
           ./modules
           wired.homeManagerModules.default
+          {
+            options = with nixpkgs.lib; {
+              my.system-config = mkOption {
+                default = system-config.nixosConfigurations."smk-desktop".config;
+                type = types.raw;
+                readOnly = true;
+              };
+            };
+          }
         ];
       };
     };

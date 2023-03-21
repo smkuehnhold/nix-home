@@ -1,11 +1,18 @@
 { pkgs, ... }:
-
 {
-  # FIXME: At some point, I want a native pipewire cli client...
-  home.packages = with pkgs; [ pamixer pulseaudio helvum ];
+  imports = [
+    ./noisetorch
+  ];
 
-  # FIXME: Pipewire is borked after startup for some reason
-  xsession.initExtra = ''
-    systemctl --user restart pipewire
-  '';
+  config = {
+    # FIXME: At some point, I want a native pipewire cli client...
+    home.packages = with pkgs; [ pamixer pulseaudio helvum ];
+
+    # FIXME: Pipewire is borked after startup for some reason
+    xsession.initExtra = ''
+      systemctl --user restart pipewire
+    '';
+  };
 }
+
+
