@@ -5,13 +5,14 @@
     enable = true;
     extensions = import ./extensions { inherit pkgs; };
     profiles = {
-      "default" = {
+      default = {
         isDefault = true;   
         settings = {
           "signon.rememberSignons" = false;
           "dom.security.https_only_mode" = true;
           "media.ffmpeg.vaapi-drm-display.enabled" = true;
           "browser.toolbars.bookmarks.2h2020" = false;
+          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         };
         userChrome = ''
           #TabsToolbar { visibility: collapse !important; }
