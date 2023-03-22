@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
-  imports = [ 
+  imports = [
+    ./apps 
     ./audio
     ./autorandr
     ./browser
@@ -12,9 +13,5 @@
     ./terminal
     ./video
     ./xinitrc.nix
-  ]; 
-
-  config = {
-    home.packages = with pkgs; [ discord ];
-  };
+  ];
 }
