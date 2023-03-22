@@ -37,7 +37,6 @@
                      [ 
                        #(mkSimpleOverlay "knock" knock.packages."${system}".knock) 
                        nix-vscode-extensions.overlays.default
-                       (mkSimpleOverlay "system-config" system-config.nixosConfigurations."smk-framework".config)
                      ];
           config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
             "steam" "steam-original" "steam-runtime" "discord" "minecraft" "minecraft-launcher" "steam-run"
