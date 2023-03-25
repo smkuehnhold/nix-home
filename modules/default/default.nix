@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -10,4 +10,8 @@
     ./htop.nix
     ./xdg.nix
   ];
+
+  config = {
+    with pkgs; [ chromium ];
+  };
 }
