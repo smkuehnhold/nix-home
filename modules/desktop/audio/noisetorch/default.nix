@@ -21,8 +21,6 @@ in with lib; (mkIf (config.my.system-config.programs.noisetorch.enable == true) 
       RemainAfterExit = "yes";
       ExecStart = "${noisetorch} -i -s ${device.id} -t 95";
       ExecStop = "${noisetorch} -u";
-      Restart = "on-failure";
-      RestartSec = 3;
     };
 
     Install = {
