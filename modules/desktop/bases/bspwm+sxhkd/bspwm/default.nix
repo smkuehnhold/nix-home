@@ -19,10 +19,11 @@ in {
       export GDK_SCALE="$SCALING_FACTOR"
     '';
 
-    # FIXME: Why do I need this again??
+    # Need this because otherwise windows spawn on top of polybar
+    # FIXME: has to be a better way
     # initExtra does not work because it occurs before bspwm starts
-    # xsession.windowManager.bspwm.extraConfig = ''
-    #   systemctl --user restart polybar.service
-    # '';
+    xsession.windowManager.bspwm.extraConfig = ''
+      systemctl --user restart polybar.service
+    '';
   };
 }
