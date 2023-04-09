@@ -7,7 +7,7 @@ rec {
     runtimeInputs ? [],
     destinationRoot ? ""
   }:
-    writeTextFile {
+    writeTextFile ({
       inherit name;
       executable = true;
       text = ''
@@ -22,7 +22,7 @@ rec {
       checkPhase = '' 
         ${stdenv.shell} -n $target
       '';
-    } // ( if destinationRoot != "" then { destination = "${destinationRoot}${name}"; } else {});
+    } // ( if destinationRoot != "" then { destination = "${destinationRoot}/${name}"; } else {}));
 
   writeShellScriptBin = { 
     name, 
@@ -31,7 +31,7 @@ rec {
   }:
     writeShellScript {
       inherit name text runtimeInputs;
-      destinationRoot = "/bin/";
+      destinationRoot = "/bin";
     };
 
   makePathExport = {
