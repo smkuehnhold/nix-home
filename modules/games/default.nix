@@ -1,20 +1,32 @@
-{ pkgs, ... }:
+{ lib, config, ... }:
+
+with lib;
 
 {
-
-  imports = [ 
+  imports = [
+    ./lutris
     ./minecraft
+    ./steam
   ];
 
+  options = {
+    my.games.suites = mkOption {
+      type = types.listOf (types.enum [ "lutris" "minecraft" "steam" ]);
+      default = [];
+      description = ''
+        List of game "suites" to install.
+
+        (WARNING: game suites require a desktop environment to be installed)
+      '';
+    };
+  };
+
   config = {
-    home.packages = with pkgs; [ 
-      (lutris-free.override {
-        extraPkgs = pkgs: [ 
-          pkgs.libnghttp2 # fixes battlenet bug https://github.com/NixOS/nixpkgs/issues/214375
-          pkgs.gnome3.adwaita-icon-theme # for lutris font
-        ];
-      })
-      steam
+    assertions = [
+      {
+        assertion = (builtins.length config.my.games.suites > 0) -> config.my.desktop.environment.enable;
+        message = "Game suites require that a desktop environment is enabled";
+      }
     ];
   };
 }

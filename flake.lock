@@ -72,17 +72,16 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
-          "system-config",
           "nixpkgs"
         ],
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1679738842,
-        "narHash": "sha256-CvqRbsyDW756EskojZptDU590rez29RcHDV3ezoze08=",
+        "lastModified": 1680555990,
+        "narHash": "sha256-Tu/i5sd0hk4c4VtWO8XpY3c9KmHDcOWF5Y2GSCh3LXA=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "83110c259889230b324bb2d35bef78bf5f214a1f",
+        "rev": "d6f3ba090ed090ae664ab5bac329654093aae725",
         "type": "github"
       },
       "original": {
@@ -97,7 +96,6 @@
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "nixpkgs": [
-          "system-config",
           "nixpkgs"
         ]
       },
@@ -150,11 +148,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1680126323,
-        "narHash": "sha256-rl6JvRLUXo5wJZXGH+Xfen99rHg+/Pcf3NwKLKJcxqs=",
+        "lastModified": 1681055105,
+        "narHash": "sha256-HETUDbn1DpeeLwV5lND1j72jI9nb0S3ax61iz6IGNO4=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "ccc46054db4c7384f01f947821635fe085a704be",
+        "rev": "fb7b8b11eef494b17fdfdb6a298768f1be02ddcf",
         "type": "github"
       },
       "original": {
@@ -168,15 +166,15 @@
         "home-manager": "home-manager",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": [
-          "system-config",
+          "system-flake",
           "nixpkgs"
         ],
         "nur": "nur",
-        "system-config": "system-config",
+        "system-flake": "system-flake",
         "wired": "wired"
       }
     },
-    "system-config": {
+    "system-flake": {
       "inputs": {
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs"
@@ -226,7 +224,6 @@
       "inputs": {
         "alejandra": "alejandra",
         "nixpkgs": [
-          "system-config",
           "nixpkgs"
         ],
         "utils": "utils_2"

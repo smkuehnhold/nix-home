@@ -1,101 +1,58 @@
 {
-  description = "Sam Kuehnhold's home-manager configuration";
-
   inputs = {
-    system-config.url = "/etc/nixos";
-    nixpkgs.follows = "system-config/nixpkgs";
+    # system-config
+    # FIXME: what happens if system does not have a flake located at /etc/nixos ???
+    # FIXME: this also means I have to keep my hosts in sink??? that sounds bogus...
+    system-flake.url = "/etc/nixos";
+
+    # nixpkgs (depends on system-flake)
+    nixpkgs.follows = "system-flake/nixpkgs";
+
+    # home-manager
     home-manager.url = "github:nix-community/home-manager/release-22.11";
-    home-manager.inputs.nixpkgs.follows = "system-config/nixpkgs"; # Pin home-manger to system nixpkgs
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # nix-user-repository
     nur.url = "github:nix-community/NUR";
-    # nur overlay implicitly uses pkgs?
-    # nur.inputs.nixpkgs.follows = "system-config/nixpkgs";
-    # FIXME: KNOCK DELETED?!?!
-    # knock.url = "github:BentonEdmondson/knock";
-    # knock.inputs.nixpkgs.follows = "system-config/nixpkgs";
-    wired.url = "github:Toqozz/wired-notify";
-    wired.inputs.nixpkgs.follows = "system-config/nixpkgs";
+  
+    # vscode-extensions
     # Pin nix-vscode-extensions because latest seems to rely on unstable?                
     # https://github.com/nix-community/nix-vscode-extensions/issues/11
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions/83b9f149ffc2a6cdd44d8083050e7e245706ae2f";
-    nix-vscode-extensions.inputs.nixpkgs.follows = "system-config/nixpkgs";
+    nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
+
+    # wired
+    wired.url = "github:Toqozz/wired-notify";
+    wired.inputs.nixpkgs.follows = "nixpkgs";
+
+    # FIXME: KNOCK DELETED?!?!
+    # knock.url = "github:BentonEdmondson/knock";
+    # knock.inputs.nixpkgs.follows = "system-config/nixpkgs";
   };
 
-  outputs = { system-config, nixpkgs, home-manager, nur, wired, nix-vscode-extensions, ... }: let
-    myPackages = (import ./packages {});
-    mkSimpleOverlay = pkgName: pkg: (final: prev: {
-      "${pkgName}" = pkg;
-    });
+  outputs = { self, system-flake, nixpkgs, home-manager, nur, nix-vscode-extensions, wired }:
+
+  let
+    lib = (import ./lib { inherit system-flake nixpkgs home-manager; });
+
   in {
-    
-    homeConfigurations = let
-      system = "x86_64-linux";
-    in {
-      "smkuehnhold@smk-framework" = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs { 
-          inherit system;
-          overlays = [ nur.overlay myPackages.overlay wired.overlays.default ] ++
-                     [ 
-                       #(mkSimpleOverlay "knock" knock.packages."${system}".knock) 
-                       nix-vscode-extensions.overlays.default
-                     ];
-          config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
-            "steam" "steam-original" "steam-runtime" "discord" "minecraft" "minecraft-launcher" "steam-run"
-          ];
-        };
-        modules = [
-          {
-            home = {
-              username = "smkuehnhold";
-              homeDirectory = "/home/smkuehnhold";
-              stateVersion = "22.05";
-            };
-          }
-          ./modules
-          wired.homeManagerModules.default
-          {
-            options = with nixpkgs.lib; {
-              my.system-config = mkOption {
-                default = system-config.nixosConfigurations."smk-framework".config;
-                type = types.raw;
-                readOnly = true;
-              };
-            };
-          }
+    homeConfigurations = builtins.foldl' (acc: nextUser: 
+      acc // (lib.mkUser { 
+        fullUsername = nextUser;
+        extraBaseModules = [
+          ({pkgs, ... }: {
+            imports = [
+              wired.homeManagerModules.default
+            ];
+
+            nixpkgs.overlays = [
+              nix-vscode-extensions.overlays.default
+              nur.overlay
+              wired.overlays.default
+            ];
+          })
         ];
-      };
-      "smkuehnhold@smk-desktop" = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs { 
-          inherit system;
-          overlays = [ nur.overlay myPackages.overlay wired.overlays.default ] ++
-                     [ 
-                       #(mkSimpleOverlay "knock" knock.packages."${system}".knock) 
-                       nix-vscode-extensions.overlays.default
-                     ];
-          config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
-            "steam" "steam-original" "steam-runtime" "discord" "minecraft" "minecraft-launcher" "steam-run"
-          ];
-        };
-        modules = [
-          {
-            home = {
-              username = "smkuehnhold";
-              homeDirectory = "/home/smkuehnhold";
-              stateVersion = "22.05";
-            };
-          }
-          ./modules
-          wired.homeManagerModules.default
-          {
-            options = with nixpkgs.lib; {
-              my.system-config = mkOption {
-                default = system-config.nixosConfigurations."smk-desktop".config;
-                type = types.raw;
-                readOnly = true;
-              };
-            };
-          }
-        ];
-      };
-    };
+      })
+    ) {} lib.const.users;
   };
 }

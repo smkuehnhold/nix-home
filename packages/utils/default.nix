@@ -1,5 +1,0 @@
-{ callPackage, ... }:
-
-{
-  scripts = (callPackage ./scripts {});
-}

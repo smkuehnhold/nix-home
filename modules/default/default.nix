@@ -1,17 +1,13 @@
-{ pkgs, ... }:
+{ pkgs, ... }: 
 
 {
   imports = [
-    ./bash.nix
-#    ./git
-#    ./gpg
-    ./emacs.nix
-    ./home-manager.nix
-    ./htop.nix
-    ./xdg.nix
+    ./bash
+    ./nix-index
+    ./xdg
   ];
 
   config = {
-    home.packages = with pkgs; [ chromium ];
+    home.packages = with pkgs; [ htop ];
   };
 }
