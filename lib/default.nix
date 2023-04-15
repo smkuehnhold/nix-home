@@ -37,9 +37,8 @@ in {
               system-config = systemConfig; # pass system configuration to modules
             };
 
-            # FIXME: why doesn't this work here???
-            # home.packages = with pkgs; [ home-manager ];
-            # home.enableNixpkgsReleaseCheck = true;
+            # home.packages = with pkgs; [ home-manager ]; doesn't work because home-manager resolves to the module
+            home.packages = [ pkgs.home-manager ];
           })
         ] ++ extraBaseModules;
       };

@@ -6,8 +6,6 @@
   ];
 
   config = {
-    home.packages = with pkgs; [ home-manager ];
-
     home = {
       username = "smkuehnhold";
       homeDirectory = "/home/smkuehnhold";
