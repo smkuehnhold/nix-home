@@ -1,0 +1,5 @@
+{ pavucontrol, ... }:
+
+{
+  home.packages = [ pavucontrol ];
+}
