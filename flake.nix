@@ -7,6 +7,8 @@
 
     # nixpkgs (depends on system-flake)
     nixpkgs.follows = "system-flake/nixpkgs";
+  
+    nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
 
     # home-manager
     home-manager.url = "github:nix-community/home-manager/release-22.11";
@@ -30,10 +32,10 @@
     # knock.inputs.nixpkgs.follows = "system-config/nixpkgs";
   };
 
-  outputs = { self, system-flake, nixpkgs, home-manager, nur, nix-vscode-extensions, wired }:
+  outputs = { self, system-flake, nixpkgs, nixpkgs-unstable, home-manager, nur, nix-vscode-extensions, wired }:
 
   let
-    lib = (import ./lib { inherit system-flake nixpkgs home-manager; });
+    lib = (import ./lib { inherit system-flake nixpkgs nixpkgs-unstable home-manager; });
 
   in {
     homeConfigurations = builtins.foldl' (acc: nextUser: 

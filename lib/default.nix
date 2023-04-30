@@ -1,4 +1,4 @@
-{ system-flake, nixpkgs, home-manager, ... }:
+{ system-flake, nixpkgs, nixpkgs-unstable, home-manager, ... }:
 
 let
   unfreePkgWhitelist = (import ./unfree-pkg-whitelist.nix);
@@ -20,6 +20,7 @@ in {
         }) [ "name" "host" ] (nixpkgs.lib.splitString "@" fullUsername));
       system = system-flake.outputs.nixosConfigurations."${user.host}".pkgs.system;
       basePkgs = system-flake.inputs.nixpkgs.legacyPackages."${system}";
+      unstablePkgs = import nixpkgs-unstable { inherit system; };
       systemConfig = system-flake.outputs.nixosConfigurations."${user.host}".config;
     in {
       "${fullUsername}" = home-manager.lib.homeManagerConfiguration {
@@ -31,6 +32,11 @@ in {
           ({ pkgs, ... }: {
             nixpkgs = {
               config.allowUnfreePredicate = mkSimplePredicate unfreePkgWhitelist nixpkgs.lib.getName;
+              overlays = [
+                (self: super: {
+                  unstable = unstablePkgs;
+                })
+              ];
             };
 
             _module.args = {
