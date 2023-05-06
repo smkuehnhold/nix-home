@@ -8,6 +8,7 @@ in {
   imports = [
     ./bases
     ./default-software
+    ./gtk
     ./optional-user-software
     ./xorg
   ];
