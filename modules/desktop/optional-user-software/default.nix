@@ -10,4 +10,5 @@ in mkIf isEnabled (mkMerge [
   (import ./firefox { inherit pkgs; })
   (import ./kdenlive { inherit pkgs; })
   (import ./mpv {})
+  (import ./simple-scan { inherit pkgs; })
 ])
