@@ -8,6 +8,7 @@ let
 in mkIf isEnabled (mkMerge [
   (import ./discord { inherit lib pkgs; })
   (import ./firefox { inherit pkgs; })
+  (import ./inkscape { inherit pkgs; })
   (import ./kdenlive { inherit pkgs; })
   (import ./mpv {})
   (import ./simple-scan { inherit pkgs; })
