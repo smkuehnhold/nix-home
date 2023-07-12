@@ -3,10 +3,10 @@
 {
   programs.firefox = {
     enable = true;
-    extensions = import ./extensions { inherit pkgs; };
     profiles = {
       default = {
-        isDefault = true;   
+        isDefault = true;
+        extensions = import ./extensions { inherit pkgs; };
         settings = {
           "signon.rememberSignons" = false;
           "dom.security.https_only_mode" = true;

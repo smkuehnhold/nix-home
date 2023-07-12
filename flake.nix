@@ -11,16 +11,14 @@
     nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
 
     # home-manager
-    home-manager.url = "github:nix-community/home-manager/release-22.11";
+    home-manager.url = "github:nix-community/home-manager/release-23.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # nix-user-repository
     nur.url = "github:nix-community/NUR";
   
     # vscode-extensions
-    # Pin nix-vscode-extensions because latest seems to rely on unstable?                
-    # https://github.com/nix-community/nix-vscode-extensions/issues/11
-    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions/83b9f149ffc2a6cdd44d8083050e7e245706ae2f";
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
 
     # wired

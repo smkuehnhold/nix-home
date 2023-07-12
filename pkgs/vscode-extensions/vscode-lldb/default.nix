@@ -17,5 +17,8 @@ let
 in vscode-utils.buildVscodeExtension {
   name = "CodeLLDB";
   src = vsix;
+  version = 1; # FIXME: What is this?
+  vscodeExtName = "vscode-lldb";
+  vscodeExtPublisher = "vadimcn";
   vscodeExtUniqueId = "vadimcn.vscode-lldb";
 }
