@@ -13,8 +13,14 @@ mkIf (builtins.elem "codium" config.my.development.editors) {
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;
-    # Needed to pass impurity check
-    mutableExtensionsDir = false;
+    # FIXME: Extensions seem to not load if extensions dir is not mutable??
+    # https://github.com/nix-community/home-manager/issues/3507
+    mutableExtensionsDir = true;
+    enableExtensionUpdateCheck = false;
+
+    userSettings = {
+      editor.minimap.enabled = false;
+    };
   };
 
   # FIXME: maybe someway to do a similar mapping for .desktop??
