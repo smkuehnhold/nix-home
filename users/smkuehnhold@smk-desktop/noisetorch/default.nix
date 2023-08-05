@@ -28,7 +28,7 @@ in (mkIf (system-config.programs.noisetorch.enable == true) {
     Service = {
       Type = "simple";
       RemainAfterExit = "yes";
-      ExecStart = "${noisetorch} -i -s ${device.id} -t 95";
+      ExecStart = "${noisetorch} -i -s ${device.id} -t 85";
       ExecStop = "${noisetorch} -u";
     };
 
