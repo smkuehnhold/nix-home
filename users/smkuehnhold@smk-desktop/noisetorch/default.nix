@@ -6,8 +6,10 @@ with lib;
 let
   # Blue Yeti
   device = {
+    # TODO: Figure out what the difference between these units are
+    # TODO: Look into udev to see if we can give the microphone a symbolic name. It looks like the unit name here might change depending on which port the mic is plugged into?
     # unit = "\"sys-devices-pci0000:00-0000:00:02.1-0000:05:00.0-0000:06:08.0-0000:08:00.0-0000:09:0c.0-0000:69:00.0-usb3-3\\\\x2d4-3\\\\x2d4:1.0-sound-card1-controlC1.device\"";
-    unit = "\"sys-devices-pci0000:00-0000:00:02.1-0000:05:00.0-0000:06:0c.0-0000:6b:00.0-usb5-5\\\\x2d3-5\\\\x2d3.1-5\\\\x2d3.1:1.0-sound-card3-controlC3.device\"";
+    unit = "dev-snd-controlC3.device";
     id = "alsa_input.usb-Generic_Blue_Microphones_201701110001-00.analog-stereo";
   };
   noisetorchDevice = {
@@ -19,7 +21,7 @@ in (mkIf (system-config.programs.noisetorch.enable == true) {
   systemd.user.services.noisetorch = {
     Unit = {
       Description = "Noisetorch";
-      Requires = ["pipewire.service" device.unit];
+      BindsTo = ["pipewire.service" device.unit];
       After = ["pipewire.service" device.unit];
     };
 
@@ -33,6 +35,7 @@ in (mkIf (system-config.programs.noisetorch.enable == true) {
     Install = {
       WantedBy = [
         "default.target"
+        device.unit
       ];
     };
   };
