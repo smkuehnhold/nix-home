@@ -38,7 +38,6 @@ in (mkIf (system-config.programs.noisetorch.enable == true) {
 
     Install = {
       WantedBy = [
-        "default.target"
         device.unit
       ];
     };
