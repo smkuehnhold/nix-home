@@ -17,6 +17,7 @@ let
   };
   noisetorch = "${system-config.programs.noisetorch.package}/bin/noisetorch";
   pamixer = "${pkgs.pamixer}/bin/pamixer";
+  fixConfiguration = pkgs.callPackage ./fix-configuration {};
 in (mkIf (system-config.programs.noisetorch.enable == true) {
   systemd.user.services.noisetorch = {
     Unit = {
@@ -28,8 +29,11 @@ in (mkIf (system-config.programs.noisetorch.enable == true) {
     Service = {
       Type = "simple";
       RemainAfterExit = "yes";
+      ExecStartPre = "${fixConfiguration} %h";
       ExecStart = "${noisetorch} -i -s ${device.id} -t 85";
       ExecStop = "${noisetorch} -u";
+      Restart="on-failure";
+      RestartSec="4";
     };
 
     Install = {
