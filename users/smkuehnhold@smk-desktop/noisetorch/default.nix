@@ -13,7 +13,7 @@ let
     id = "alsa_input.usb-Generic_Blue_Microphones_201701110001-00.analog-stereo";
   };
   noisetorchDevice = {
-    name = "\"NoiseTorch Microphone for Blue Microphones\"";
+    name = "NoiseTorch Microphone for Blue Microphones";
   };
   noisetorch = "${system-config.programs.noisetorch.package}/bin/noisetorch";
   pamixer = "${pkgs.pamixer}/bin/pamixer";
@@ -52,7 +52,8 @@ in (mkIf (system-config.programs.noisetorch.enable == true) {
 
     Service = {
       Type = "oneshot";
-      ExecStart = "${pamixer} --source ${noisetorchDevice.name} --set-volume 80";
+      Environment = "NOISETORCH_DEVICE_NAME=\"${noisetorchDevice.name}\"";
+      ExecStart = "${pamixer} --source \${NOISETORCH_DEVICE_NAME} --set-volume 80";
       Restart = "on-failure";
       RestartSec = 2;
     };
