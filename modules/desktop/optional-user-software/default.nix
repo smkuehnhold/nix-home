@@ -6,8 +6,10 @@ let
   cfg = config.my.desktop.environment;
   isEnabled = cfg.enable && cfg.includesOptionalUserSoftware;
 in mkIf isEnabled (mkMerge [
+  (import ./app-flowy { inherit pkgs; })
   (import ./discord { inherit lib pkgs; })
   (import ./firefox { inherit pkgs; })
+  (import ./free-cad { inherit pkgs; })
   (import ./gimp { inherit pkgs; })
   (import ./inkscape { inherit pkgs; })
   (import ./kdenlive { inherit pkgs; })
