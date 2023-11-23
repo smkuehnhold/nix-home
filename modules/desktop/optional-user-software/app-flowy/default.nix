@@ -1,5 +1,5 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs; [ appflowy ];
+  home.packages = with pkgs; [ unstable.appflowy ];
 }
