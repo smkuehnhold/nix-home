@@ -10,5 +10,5 @@ in with pkgs.nur.repos.rycee.firefox-addons; [
   pins.sidebery
   privacy-badger
   bitwarden
-#  betterttv
+  betterttv
 ]
