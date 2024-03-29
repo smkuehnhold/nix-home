@@ -2,6 +2,7 @@
 
 let
   pins = pkgs.callPackage ./pins {};
+  rikaitan = pkgs.callPackage ./rikaitan.nix {};
 in with pkgs.nur.repos.rycee.firefox-addons; [
   ublock-origin
   reddit-enhancement-suite
@@ -11,4 +12,5 @@ in with pkgs.nur.repos.rycee.firefox-addons; [
   privacy-badger
   bitwarden
   betterttv
+  rikaitan
 ]

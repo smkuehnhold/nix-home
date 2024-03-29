@@ -8,6 +8,10 @@
   ];
 
   config = {
-    home.packages = with pkgs; [ htop ];
+    home.packages = with pkgs; [ 
+      htop
+      zip
+      unzip
+    ];
   };
 }

@@ -10,6 +10,8 @@ in {
     enable = true;
     monitors = {
       "primary" = [ "1" "2" "3" "4" ];
+      # "DP-3" = [ "1" "2" "3" "4" ];
+      # "HDMI-1" = [ "5" "6" "7" "8" ]; 
     };
 
     # Need to restart polybar because otherwise windows spawn on top of polybar

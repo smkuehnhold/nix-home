@@ -1,0 +1,1 @@
+bspc query --monitors focused --names

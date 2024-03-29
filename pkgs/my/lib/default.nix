@@ -1,6 +1,12 @@
-{ writeTextFile, runtimeShell, lib, stdenv, ... }:
+{ callPackages, writeTextFile, runtimeShell, lib, stdenv, ... }:
 
-rec {
+let 
+  autorandr = callPackages ./autorandr.nix {};
+  firefox = callPackages ./firefox.nix {};
+in rec {
+  inherit (autorandr) mkAutorandrMonitor mkAutorandrProfile mkAutorandrProfilesFromPath;
+  inherit (firefox) buildFirefoxXpiAddon;
+
   writeShellScript = { 
     name, 
     text, 

@@ -1,6 +1,6 @@
 { lib, config, pkgs, ... }:
 let
-  numbers = pkgs.my.utils.math; 
+  numbers = pkgs.my.utils.math;
 
   # Not sure if there is a library function that accomplishes the same thing
   #  lib.getBin does not seem to do what I think it should do
@@ -12,6 +12,11 @@ let
     bspc = "${pkgs.bspwm}/bin/bspc"; 
     sed = "${pkgs.gnused}/bin/sed";
     awk = "${pkgs.gawk}/bin/awk";
+    notifySend = "${pkgs.libnotify}/bin/notify-send";
+    autorandr = "${pkgs.autorandr}/bin/autorandr";
+    createNewNumberedDesktop = "${pkgs.my.utils.bspwm.createNewNumberedDesktop}/bin/create-new-numbered-desktop";
+    deleteLargestNumberedDesktopGreaterThanLowerBound = "${pkgs.my.utils.bspwm.deleteLargestNumberedDesktopGreaterThanLowerBound}/bin/delete-largest-numbered-desktop-greater-than-lower-bound";
+    moveFloatingNodeToEdge = "${pkgs.my.utils.bspwm.moveFloatingNodeToEdge}/bin/move-floating-node-to-edge";
     pamixer = let 
       cmd = getBin pkgs.pamixer;
     in rec {
@@ -46,8 +51,13 @@ in {
   services.sxhkd = {
     enable = true;
     keybindings = with commands; {
-      # quit OR restart bspwm 
-      "super + shift + {q,r}" = "${bspc} {quit,wm -r}"; 
+      # quit bspwm 
+      "super + shift + q" = "${bspc} quit"; 
+
+      # load detected autorandr profile
+      #  (restarts bspwm among other things)
+      "super + shift + r" = "${autorandr} -c";
+
       # reload sxhkd config
       "super + shift + z" = "pkill -10 sxhkd";
 
@@ -67,11 +77,24 @@ in {
       # (bspc desktop -f DESKTOP_NAME): focusus on desktop with name DESKTOP_NAME
       # (bspc node -d DESKTOP_NAME): sends focused node to desktop with name DESKTOP_NAME
       # (bspc query -D -m focused --names): queries for desktops on the currently focused monitor and prints their names
-      # (sed "#q;d"): filters and prints the string on line number #
+      # (sed "#q;d"): filters and prints the string on line numbaaaer #
       # i.e. focus on the nth desktop owned by the currently focused monitor OR
-      #      send the currently focused node to the nth desktop owned by the currently focused monitor
+      #      send the currently focused norfe to the nth desktop owned by the currently focused monitor
       "super + {_, shift +}{1-9}" = "${bspc} {desktop -f,node -d} $(${bspc} query -D -m focused --names | ${sed} \"{1-9}q;d\")";
       "super + {_, shift +}grave" = "${bspc} {desktop -f,node -d} last";
+      "super + alt + {1,2}; {_, shift +}{1-9}" = ''
+        DESKTOPS={"1 2 3 4","5 6 7 8"}; COMMAND={"desktop -f","node -d"}; \
+         ${bspc} $COMMAND $(echo "$DESKTOPS" | cut -d" " -f{1-9})
+        '';
+
+      # FIXME: Clean-up
+      # Do the same thing as above, but absolutely
+      #"super + a + {1-9}: {_, shift +}{1-9}" = "DESKTOPS={\"1 2 3 4\",\"5 6 7 8\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"}; ${bspc} {desktop -f,node -d} \$(echo \"$DESKTOPS\" | cut -d\" \" -f{1-9})";
+      #"super + a + {_, shift +}{1-9}" = "${bspc} {desktop -f, node -d} {1-9}";
+      # "super + o; {1,2} + {_, shift +}{1-9}" = ''
+      #   DESKTOPS={"1 2 3 4","5 6 7 8"}; COMMAND={"desktop -f","node -d"}; \
+      #    ${bspc} $COMMAND $(echo "$DESKTOPS" | cut -d" " -f{1-9})
+      # '';
 
       # Media-keys
       "XF86AudioMute" = pamixer.toggleMute;
@@ -107,6 +130,9 @@ in {
         bspc node --state {tiled,~tiled,pseudo_tiled,~pseudo_tiled,floating,~floating,fullscreen,~fullscreen}	
       '';
 
+      # Move a floating node to the edge of its monitor
+      "super + s: ctrl + {h,j,k,l}" = "${commands.moveFloatingNodeToEdge} {-l,-b,-t,-r}";
+
       # Cycle between windows on the current desktop
       "super + {c,shift + c}" = "bspc node --focus {next,prev}.local.window";
 
@@ -116,6 +142,9 @@ in {
       # Toggle the bottom bar
       # FIXME: What if I don't want to padding to be 0 by default?
       "super + b" = "bspc config bottom_padding 0 && polybar-msg cmd toggle";
+
+      # Create a new desktop with name = largest name on current desktop + 1
+      "super + {_, shift +} d" = "{${commands.createNewNumberedDesktop},${commands.deleteLargestNumberedDesktopGreaterThanLowerBound} 4}";
     }; 
   };
 }

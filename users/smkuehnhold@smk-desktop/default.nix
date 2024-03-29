@@ -12,6 +12,9 @@
       stateVersion = "22.05";
     };
 
+    # TEMP
+    home.packages = with pkgs; [ virt-manager ];
+
     my.desktop.environment = {
       enable = true;
       base = "bspwm+sxhkd";

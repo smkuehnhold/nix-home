@@ -6,7 +6,6 @@ let
   cfg = config.my.desktop.environment;
   isEnabled = cfg.enable && cfg.includesOptionalUserSoftware;
 in mkIf isEnabled (mkMerge [
-  (import ./app-flowy { inherit pkgs; })
   (import ./discord { inherit lib pkgs; })
   (import ./firefox { inherit pkgs; })
   (import ./free-cad { inherit pkgs; })
@@ -15,4 +14,10 @@ in mkIf isEnabled (mkMerge [
   (import ./kdenlive { inherit pkgs; })
   (import ./mpv {})
   (import ./simple-scan { inherit pkgs; })
+  ({
+    home.packages = with pkgs; [ 
+      evince
+      logseq
+    ];
+  })
 ])

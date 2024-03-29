@@ -15,11 +15,13 @@ mkIf (builtins.elem "codium" config.my.development.editors) {
     package = pkgs.vscodium;
     # FIXME: Extensions seem to not load if extensions dir is not mutable??
     # https://github.com/nix-community/home-manager/issues/3507
-    mutableExtensionsDir = true;
+    #mutableExtensionsDir = true;
     enableExtensionUpdateCheck = false;
 
     userSettings = {
       editor.minimap.enabled = false;
+      window.restoreWindows = "none";
+      workbench.sideBar.location = "right";
     };
   };
 

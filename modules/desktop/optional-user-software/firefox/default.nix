@@ -13,6 +13,7 @@
           "media.ffmpeg.vaapi-drm-display.enabled" = true;
           "browser.toolbars.bookmarks.2h2020" = false;
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+          "browser.sessionstore.max_resumed_crashes" = 0;
         };
         userChrome = ''
           #TabsToolbar { visibility: collapse !important; }
